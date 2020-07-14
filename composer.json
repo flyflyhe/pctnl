@@ -1,0 +1,15 @@
+{
+    "name": "he/pctnl",
+    "description": "pctnl",
+    "type": "library",
+    "require": {
+        "php": ">=7.1.0",
+        "ext-pcntl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "x\\": "./"
+        }
+    }
+}
