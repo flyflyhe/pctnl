@@ -73,14 +73,19 @@ class Manager
         }
 
         var_export($this->pidMap);
-        while (1) {
+        while (count($this->pidMap)) {
             echo "主进程 {$this->pid} 执行中".PHP_EOL;
             foreach ($this->pidMap as $pid => $_) {
                 $status = null;
-                pcntl_waitpid($pid, $status);
+                $res = pcntl_waitpid($pid, $status, WNOHANG);
+                if ($res > 0 || $res == -1) {
+                    unset($this->pidMap[$pid]);
+                }
+                sleep(2);
             }
-            sleep(2);
         }
+
+        echo "执行完毕".PHP_EOL;
     }
 
     public function createPipe(string $pipe, int $mode = null)
